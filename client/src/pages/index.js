@@ -1,0 +1,16 @@
+import Home from "./Home";
+import Login from "./Login";
+import Register from "./Register";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
+import Dashboard from "./Dashboard";
+import SuitDesigns from "./SuitDesigns";
+import ShirtDesigns from "./ShirtDesigns";
+import PantDesigns from "./PantDesigns";
+import MeasurementGuide from "./MeasurementGuide";
+import FabricChoice from "./FabricChoice";
+import Profile from "./Profile";
+import SuitBuilder from "./SuitBuilder";
+import Collection from "./Collection";
+
+export { Home, Login, Register, ForgotPassword, ResetPassword, Dashboard, SuitDesigns, ShirtDesigns, PantDesigns, MeasurementGuide, FabricChoice, Profile, SuitBuilder, Collection };
