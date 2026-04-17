@@ -5,8 +5,7 @@ dotenv.config();
 
 export const sendEmail = async (options) => {
     const transporter = nodemailer.createTransport({
-        // Using gmail service for example, or configure host/port manually
-        // service: "gmail", 
+        service: "gmail", // Adding service property for better Gmail support
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         secure: false, // true for 465, false for other ports

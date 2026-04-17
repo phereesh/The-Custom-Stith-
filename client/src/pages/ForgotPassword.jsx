@@ -9,14 +9,14 @@ import 'aos/dist/aos.css';
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
-    const [contact, setContact] = useState("");
+    const [email, setEmail] = useState("");
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const res = await axios.post(`${BASE_URL}/api/v1/auth/forgot-password`, {
-                contact,
+                email,
             });
 
             if (res && res.data.success) {
@@ -27,7 +27,8 @@ const ForgotPassword = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            const message = error.response?.data?.message || "Something went wrong";
+            toast.error(message);
         }
     };
 
@@ -45,16 +46,16 @@ const ForgotPassword = () => {
                 >
                     <div className="text-center mb-6">
                         <h2 className='text-4xl text-white font-serif mb-2'>Reset Password</h2>
-                        <p className='text-gray-400'>Enter your phone number to receive a reset link</p>
+                        <p className='text-gray-400'>Enter your email address to receive a reset link</p>
                     </div>
 
                     <div className="w-full max-w-[500px] bg-tailor-darker border border-tailor-gold/20 rounded-lg p-8 shadow-2xl">
                         <Input
-                            type="text"
-                            placeholder="Phone Number"
-                            name="contact"
-                            value={contact}
-                            onChange={(e) => setContact(e.target.value)}
+                            type="email"
+                            placeholder="Email Address"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             data-aos="zoom-in"
                         />
 
