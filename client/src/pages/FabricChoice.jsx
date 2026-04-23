@@ -3,56 +3,119 @@ import { Header } from '../components';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const SingleBreastedSVG = ({ color }) => (
-    <svg viewBox="0 0 200 240" className="w-64 h-64 md:w-80 md:h-80 drop-shadow-2xl">
-        <path d="M50,40 Q100,0 150,40 Q190,50 190,100 L180,220 L100,230 L20,220 L10,100 Z" fill={color} style={{ transition: 'fill 0.4s ease' }} />
-        <path d="M70,20 L100,100 L80,120 Z" fill="rgba(0,0,0,0.3)" />
-        <path d="M130,20 L100,100 L120,120 Z" fill="rgba(0,0,0,0.3)" />
-        <path d="M70,20 L100,90 L130,20 Z" fill="#ffffff" />
-        <path d="M92,40 L108,40 L100,90 Z" fill="#111827" />
-        <circle cx="100" cy="140" r="4" fill="#111827" />
-        <circle cx="100" cy="170" r="4" fill="#111827" />
-        <path d="M100,230 L100,100 M80,140 L100,140 M80,170 L100,170" stroke="rgba(0,0,0,0.2)" strokeWidth="1" fill="none" />
-        <path d="M20,220 L100,230 L180,220 L190,100 Q190,50 150,40 Q100,0 50,40 Q10,50 10,100 Z" fill="url(#shadingSB)" style={{ mixBlendMode: "multiply" }} />
-        <defs>
-            <linearGradient id="shadingSB" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(0,0,0,0.6)" />
-                <stop offset="30%" stopColor="rgba(255,255,255,0.2)" />
-                <stop offset="100%" stopColor="rgba(0,0,0,0.7)" />
-            </linearGradient>
-        </defs>
-    </svg>
-);
+const SingleBreastedSVG = ({ color }) => {
+    const bodyPath = "M 52,54 C 54,42 72,30 95,34 L 100,135 L 105,34 C 128,30 146,42 148,54 L 152,230 L 100,236 L 48,230 Z";
+    const leftSleeve = "M 56,54 C 40,54 26,64 22,78 L 14,220 L 44,224 L 50,100 C 50,82 52,66 56,56 Z";
+    const rightSleeve = "M 144,54 C 160,54 174,64 178,78 L 186,220 L 156,224 L 150,100 C 150,82 148,66 144,56 Z";
+    const transition = { transition: 'fill 0.4s ease' };
+    return (
+        <svg viewBox="0 0 200 240" className="w-64 h-64 md:w-80 md:h-80 drop-shadow-2xl">
+            <defs>
+                <linearGradient id="shadingSB" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgba(0,0,0,0.28)" />
+                    <stop offset="18%" stopColor="rgba(0,0,0,0)" />
+                    <stop offset="82%" stopColor="rgba(0,0,0,0)" />
+                    <stop offset="100%" stopColor="rgba(0,0,0,0.28)" />
+                </linearGradient>
+            </defs>
 
-const DoubleBreastedSVG = ({ color }) => (
-    <svg viewBox="0 0 200 240" className="w-64 h-64 md:w-80 md:h-80 drop-shadow-2xl">
-        <path d="M40,40 Q100,-10 160,40 Q200,50 200,110 L190,220 L100,230 L10,220 L0,110 Z" fill={color} style={{ transition: 'fill 0.4s ease' }} />
-        <path d="M60,20 L120,110 L80,130 Z" fill="rgba(0,0,0,0.35)" />
-        <path d="M140,20 L120,80 L140,100 Z" fill="rgba(0,0,0,0.2)" />
-        <path d="M60,20 L120,80 L140,20 Z" fill="#ffffff" />
-        <path d="M90,40 L110,40 L120,80 Z" fill="#111827" />
+            {/* Shirt V-neck underlay */}
+            <path d="M 85,32 L 115,32 L 100,134 Z" fill="#f1f5f9" />
 
-        {/* Double breasted overlap line */}
-        <path d="M120,110 L110,230" stroke="rgba(0,0,0,0.4)" strokeWidth="2" fill="none" />
+            {/* Tie knot + blade */}
+            <rect x="95" y="34" width="10" height="14" fill="#0f172a" rx="1" />
+            <path d="M 93,48 L 107,48 L 104,128 L 100,138 L 96,128 Z" fill="#0f172a" />
 
-        {/* 6 buttons for double breasted (3 pairs) */}
-        <circle cx="80" cy="130" r="5" fill="#111827" />
-        <circle cx="120" cy="130" r="5" fill="#111827" />
-        <circle cx="80" cy="165" r="5" fill="#111827" />
-        <circle cx="120" cy="165" r="5" fill="#111827" />
-        <circle cx="80" cy="200" r="5" fill="#111827" />
-        <circle cx="120" cy="200" r="5" fill="#111827" />
+            {/* Sleeves (drawn behind body so shoulder seam is hidden) */}
+            <path d={leftSleeve} fill={color} style={transition} />
+            <path d={rightSleeve} fill={color} style={transition} />
 
-        <path d="M10,220 L100,230 L190,220 L200,110 Q200,50 160,40 Q100,-10 40,40 Q0,50 0,110 Z" fill="url(#shadingDB)" style={{ mixBlendMode: "multiply" }} />
-        <defs>
-            <linearGradient id="shadingDB" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(0,0,0,0.7)" />
-                <stop offset="40%" stopColor="rgba(255,255,255,0.15)" />
-                <stop offset="100%" stopColor="rgba(0,0,0,0.8)" />
-            </linearGradient>
-        </defs>
-    </svg>
-);
+            {/* Jacket body with V-neck cutout */}
+            <path d={bodyPath} fill={color} style={transition} />
+
+            {/* Notch lapels */}
+            <path d="M 62,52 L 95,36 L 98,115 L 88,60 L 66,66 Z" fill="rgba(0,0,0,0.18)" />
+            <path d="M 138,52 L 105,36 L 102,115 L 112,60 L 134,66 Z" fill="rgba(0,0,0,0.18)" />
+
+            {/* Cuffs - subtle darker band at sleeve ends */}
+            <path d="M 14,218 L 44,222 L 44,228 L 16,226 Z" fill="rgba(0,0,0,0.22)" />
+            <path d="M 186,218 L 156,222 L 156,228 L 184,226 Z" fill="rgba(0,0,0,0.22)" />
+
+            {/* Subtle sleeve fold shading */}
+            <path d="M 32,78 L 30,220" stroke="rgba(0,0,0,0.12)" strokeWidth="1" fill="none" />
+            <path d="M 168,78 L 170,220" stroke="rgba(0,0,0,0.12)" strokeWidth="1" fill="none" />
+
+            {/* Center closure seam below buttons */}
+            <line x1="100" y1="138" x2="100" y2="230" stroke="rgba(0,0,0,0.28)" strokeWidth="0.8" />
+
+            {/* Two-button single-breasted */}
+            <circle cx="100" cy="168" r="3.5" fill="#0f172a" />
+            <circle cx="100" cy="198" r="3.5" fill="#0f172a" />
+
+            {/* Edge shading (lightweight, no multiply) */}
+            <path d={bodyPath} fill="url(#shadingSB)" pointerEvents="none" />
+        </svg>
+    );
+};
+
+const DoubleBreastedSVG = ({ color }) => {
+    const bodyPath = "M 50,56 C 52,42 72,28 95,34 L 100,138 L 105,34 C 128,28 148,42 150,56 L 155,232 L 100,236 L 45,232 Z";
+    const leftSleeve = "M 54,56 C 38,56 24,66 20,80 L 12,222 L 42,226 L 48,102 C 48,84 50,68 54,58 Z";
+    const rightSleeve = "M 146,56 C 162,56 176,66 180,80 L 188,222 L 158,226 L 152,102 C 152,84 150,68 146,58 Z";
+    const transition = { transition: 'fill 0.4s ease' };
+    return (
+        <svg viewBox="0 0 200 240" className="w-64 h-64 md:w-80 md:h-80 drop-shadow-2xl">
+            <defs>
+                <linearGradient id="shadingDB" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgba(0,0,0,0.3)" />
+                    <stop offset="18%" stopColor="rgba(0,0,0,0)" />
+                    <stop offset="82%" stopColor="rgba(0,0,0,0)" />
+                    <stop offset="100%" stopColor="rgba(0,0,0,0.3)" />
+                </linearGradient>
+            </defs>
+
+            {/* Shirt V-neck underlay */}
+            <path d="M 83,32 L 117,32 L 100,108 Z" fill="#f1f5f9" />
+
+            {/* Tie knot + blade */}
+            <rect x="95" y="34" width="10" height="14" fill="#0f172a" rx="1" />
+            <path d="M 93,48 L 107,48 L 104,105 L 100,115 L 96,105 Z" fill="#0f172a" />
+
+            {/* Sleeves (drawn behind body) */}
+            <path d={leftSleeve} fill={color} style={transition} />
+            <path d={rightSleeve} fill={color} style={transition} />
+
+            {/* Jacket body with V-neck cutout */}
+            <path d={bodyPath} fill={color} style={transition} />
+
+            {/* Overlap panel - right flap crosses over to viewer's left */}
+            <path d="M 105,38 L 70,234 L 100,236 L 130,234 L 130,120 L 110,50 Z" fill="rgba(0,0,0,0.14)" />
+
+            {/* Peak lapels */}
+            <path d="M 58,54 L 95,36 L 100,60 L 96,120 L 82,70 L 62,68 Z" fill="rgba(0,0,0,0.22)" />
+            <path d="M 142,54 L 105,36 L 100,60 L 104,120 L 118,70 L 138,68 Z" fill="rgba(0,0,0,0.22)" />
+
+            {/* Cuffs */}
+            <path d="M 12,220 L 42,224 L 42,230 L 14,228 Z" fill="rgba(0,0,0,0.22)" />
+            <path d="M 188,220 L 158,224 L 158,230 L 186,228 Z" fill="rgba(0,0,0,0.22)" />
+
+            {/* Subtle sleeve fold shading */}
+            <path d="M 30,82 L 28,222" stroke="rgba(0,0,0,0.12)" strokeWidth="1" fill="none" />
+            <path d="M 170,82 L 172,222" stroke="rgba(0,0,0,0.12)" strokeWidth="1" fill="none" />
+
+            {/* 6 buttons (3 pairs) aligned with overlap panel */}
+            <circle cx="82" cy="140" r="4" fill="#0f172a" />
+            <circle cx="118" cy="140" r="4" fill="#0f172a" />
+            <circle cx="82" cy="178" r="4" fill="#0f172a" />
+            <circle cx="118" cy="178" r="4" fill="#0f172a" />
+            <circle cx="82" cy="214" r="4" fill="#0f172a" />
+            <circle cx="118" cy="214" r="4" fill="#0f172a" />
+
+            {/* Edge shading */}
+            <path d={bodyPath} fill="url(#shadingDB)" pointerEvents="none" />
+        </svg>
+    );
+};
 
 // Premium Fabric Imagery & Colors - Using stable IDs for reliable React rendering
 const FABRIC_DATA = [

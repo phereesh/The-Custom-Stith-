@@ -98,6 +98,7 @@ const loginController = async (req, res) => {
                 city: user.city,
                 contact: user.contact,
                 measurements: user.measurements || {},
+                role: user.role,
                 _id: user._id,
             },
             token,
@@ -261,6 +262,7 @@ const updateProfileController = async (req, res) => {
                 city: updatedUser.city,
                 contact: updatedUser.contact,
                 measurements: updatedUser.measurements,
+                role: updatedUser.role,
                 _id: updatedUser._id,
             }
         });

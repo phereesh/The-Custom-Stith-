@@ -28,7 +28,10 @@ const Login = () => {
         toast.success(res.data.message);
         setAuth({ ...auth, user: res.data.user, token: res.data.token });
         localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate(location.state || "/dashboard");
+        const destination =
+          location.state ||
+          (res.data.user?.role === 1 ? "/admin/dashboard" : "/dashboard");
+        navigate(destination);
       } else {
         toast.error(res.data.message);
       }

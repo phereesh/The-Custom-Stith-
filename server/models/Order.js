@@ -6,21 +6,77 @@ const orderSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
+    orderType: {
+        type: String,
+        default: "Full Suit",
+        enum: ["Full Suit", "Jacket Only", "Pants Only", "Exclusive"],
+    },
     suitDesign: {
         type: String,
-        required: true,
+        default: "N/A",
     },
     lapelType: {
         type: String,
-        required: true,
+        default: "N/A",
     },
     fabricType: {
         type: String,
-        required: true,
+        default: "N/A",
     },
     measurements: {
         type: Object,
-        required: true,
+        default: {},
+    },
+    isExclusive: {
+        type: Boolean,
+        default: false,
+    },
+    productId: {
+        type: Number,
+    },
+    productTitle: {
+        type: String,
+    },
+    productImage: {
+        type: String,
+    },
+    productCategory: {
+        type: String,
+    },
+    amount: {
+        type: Number,
+        default: 0,
+    },
+    paymentMethod: {
+        type: String,
+        default: "N/A",
+    },
+    paymentStatus: {
+        type: String,
+        default: "N/A",
+        enum: ["N/A", "Pending", "Completed", "Failed", "Refunded"],
+    },
+    refundedAt: {
+        type: Date,
+    },
+    cancelReason: {
+        type: String,
+    },
+    cancelledBy: {
+        type: String,
+        enum: ["User", "Admin"],
+    },
+    cancelledAt: {
+        type: Date,
+    },
+    transactionUuid: {
+        type: String,
+    },
+    transactionId: {
+        type: String,
+    },
+    pidx: {
+        type: String,
     },
     status: {
         type: String,

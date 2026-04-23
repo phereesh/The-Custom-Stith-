@@ -182,7 +182,7 @@ const Home = () => {
               </li>
             </ul>
             <Link
-              to="/register"
+              to="/book-home-visit"
               className="inline-block px-6 py-3 border border-tailor-gold text-tailor-gold font-semibold rounded-md hover:bg-tailor-gold/10 transition-all duration-300"
             >
               Book Home Visit

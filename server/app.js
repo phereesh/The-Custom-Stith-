@@ -17,6 +17,8 @@ const PORT = process.env.PORT || 5001;
 import connectDB from "./utils/connectDB.js";
 import authRoute from "./routes/authRoute.js";
 import orderRoute from "./routes/orderRoute.js";
+import homeVisitRoute from "./routes/homeVisitRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
 
 app.get("/", (req, res) => {
     res.send("server is running successfully");
@@ -24,6 +26,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/order", orderRoute);
+app.use("/api/v1/home-visit", homeVisitRoute);
+app.use("/api/v1/payment", paymentRoute);
 
 const startServer = async () => {
     try {

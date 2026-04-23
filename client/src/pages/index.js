@@ -12,5 +12,10 @@ import FabricChoice from "./FabricChoice";
 import Profile from "./Profile";
 import SuitBuilder from "./SuitBuilder";
 import Collection from "./Collection";
+import BookHomeVisit from "./BookHomeVisit";
+import AdminDashboard from "./AdminDashboard";
+import PaymentSuccess from "./PaymentSuccess";
+import PaymentFailure from "./PaymentFailure";
+import KhaltiSuccess from "./KhaltiSuccess";
 
-export { Home, Login, Register, ForgotPassword, ResetPassword, Dashboard, SuitDesigns, ShirtDesigns, PantDesigns, MeasurementGuide, FabricChoice, Profile, SuitBuilder, Collection };
+export { Home, Login, Register, ForgotPassword, ResetPassword, Dashboard, SuitDesigns, ShirtDesigns, PantDesigns, MeasurementGuide, FabricChoice, Profile, SuitBuilder, Collection, BookHomeVisit, AdminDashboard, PaymentSuccess, PaymentFailure, KhaltiSuccess };
