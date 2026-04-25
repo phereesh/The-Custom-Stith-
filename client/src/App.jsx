@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { Home, Login, Register, ForgotPassword, ResetPassword, Dashboard, SuitDesigns, ShirtDesigns, PantDesigns, MeasurementGuide, FabricChoice, Profile, SuitBuilder, Collection, BookHomeVisit, AdminDashboard, PaymentSuccess, PaymentFailure, KhaltiSuccess } from './pages';
+import { Home, Login, Register, ForgotPassword, ResetPassword, Dashboard, SuitDesigns, ShirtDesigns, PantDesigns, MeasurementGuide, FabricChoice, Profile, SuitBuilder, Collection, BookHomeVisit, BookShopVisit, AdminDashboard, PaymentSuccess, PaymentFailure, KhaltiSuccess } from './pages';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
         <Route path="/build-suit" element={<SuitBuilder />} />
         <Route path="/exclusive-collection" element={<Collection />} />
         <Route path="/book-home-visit" element={<BookHomeVisit />} />
+        <Route path="/book-boutique-visit" element={<BookShopVisit />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/payment/success" element={<PaymentSuccess />} />
         <Route path="/payment/failure" element={<PaymentFailure />} />

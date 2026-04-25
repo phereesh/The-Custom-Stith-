@@ -78,6 +78,10 @@ const orderSchema = new mongoose.Schema({
     pidx: {
         type: String,
     },
+    size: {
+        type: String,
+        default: "N/A",
+    },
     status: {
         type: String,
         default: "Pending",

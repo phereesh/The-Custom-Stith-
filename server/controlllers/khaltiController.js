@@ -11,7 +11,7 @@ const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL || "http://localhost:5173";
 
 export const initiateKhaltiController = async (req, res) => {
     try {
-        const { productId, productTitle, productImage, productCategory, amount } = req.body;
+        const { productId, productTitle, productImage, productCategory, amount, size } = req.body;
 
         if (!productTitle || !amount) {
             return res
@@ -35,6 +35,7 @@ export const initiateKhaltiController = async (req, res) => {
             productImage,
             productCategory,
             amount: numericAmount,
+            size: size || "N/A",
             paymentMethod: "khalti",
             paymentStatus: "Pending",
             transactionUuid: purchaseOrderId,

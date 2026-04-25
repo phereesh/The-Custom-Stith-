@@ -11,12 +11,13 @@ export const createHomeVisitController = async (req, res) => {
             preferredDate,
             preferredTime,
             notes,
+            serviceType,
         } = req.body;
 
-        if (!name || !email || !contact || !address || !city || !preferredDate || !preferredTime) {
+        if (!name || !email || !contact || !preferredDate || !preferredTime) {
             return res.status(400).send({
                 success: false,
-                message: "All required fields must be filled",
+                message: "Basic details and preferred date/time are required",
             });
         }
 
@@ -29,6 +30,7 @@ export const createHomeVisitController = async (req, res) => {
             city,
             preferredDate,
             preferredTime,
+            serviceType: serviceType || "Home Concierge",
             notes: notes || "",
         }).save();
 

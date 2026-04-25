@@ -4,8 +4,10 @@ import { Header } from '../components';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import heroImage from '../assets/hero-image.jpg';
+import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
+  const { t } = useLanguage();
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -24,24 +26,23 @@ const Home = () => {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           <div className="flex-1 text-center lg:text-left" data-aos="fade-right">
             <h1 className="text-5xl lg:text-6xl font-serif text-white mb-6 leading-tight">
-              Welcome to <span className="text-tailor-gold">Custom Stitch</span>
+              {t('welcome')} <span className="text-tailor-gold">Custom Stitch</span>
             </h1>
             <p className="text-xl text-gray-400 mb-8 leading-relaxed">
-              Your premier destination for custom tailoring services.
-              We create perfectly fitted garments tailored to your unique style and measurements.
+              {t('tagline')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 to="/login"
                 className="px-8 py-4 bg-tailor-gold text-tailor-black font-semibold rounded-md hover:bg-tailor-gold-light transition-all duration-300 shadow-lg hover:shadow-tailor-gold/50 text-center"
               >
-                Get Started
+                {t('getStarted')}
               </Link>
               <Link
                 to="/register"
                 className="px-8 py-4 border-2 border-tailor-gold text-tailor-gold font-semibold rounded-md hover:bg-tailor-gold/10 transition-all duration-300 text-center"
               >
-                Create Account
+                {t('createAccount')}
               </Link>
             </div>
           </div>
@@ -61,7 +62,7 @@ const Home = () => {
       {/* Features Section */}
       <section className="container mx-auto px-6 py-20">
         <h2 className="text-4xl font-serif text-white text-center mb-16" data-aos="fade-up">
-          Why Choose Us
+          {t('whyChooseUs')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-tailor-darker border border-tailor-gold/20 rounded-lg p-8 text-center" data-aos="zoom-in">
@@ -104,9 +105,9 @@ const Home = () => {
       {/* Service Options Section */}
       <section className="container mx-auto px-6 py-20 border-t border-tailor-gold/10">
         <div className="text-center mb-16" data-aos="fade-up">
-          <h2 className="text-4xl font-serif text-white mb-4">How We Serve You</h2>
+          <h2 className="text-4xl font-serif text-white mb-4">{t('howWeServe')}</h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Choose the most convenient way to experience our premium tailoring services.
+            {t('howWeServeDesc')}
           </p>
         </div>
 
@@ -118,11 +119,11 @@ const Home = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
-            <h3 className="text-3xl font-serif text-white mb-6">Visit Our boutique</h3>
+            <h3 className="text-3xl font-serif text-white mb-6">{t('visitBoutique')}</h3>
             <p className="text-gray-400 mb-8 leading-relaxed">
-              Experience the luxury of personalized tailoring in person. Browse our full range of premium fabrics and get measured by our master tailors.
+              {t('visitBoutiqueDesc')}
             </p>
-            <div className="space-y-4">
+            <div className="space-y-4 mb-8">
               <div className="flex items-start gap-4">
                 <div className="mt-1">
                   <svg className="w-5 h-5 text-tailor-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,6 +149,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            <Link
+              to="/book-boutique-visit"
+              className="inline-block px-6 py-3 bg-tailor-gold text-tailor-black font-semibold rounded-md hover:bg-tailor-gold-light transition-all duration-300 shadow-lg hover:shadow-tailor-gold/50"
+            >
+              {t('bookBoutique')}
+            </Link>
           </div>
 
           {/* Home Service Card */}
@@ -157,9 +164,9 @@ const Home = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
             </div>
-            <h3 className="text-3xl font-serif text-white mb-6">Home Concierge</h3>
+            <h3 className="text-3xl font-serif text-white mb-6">{t('homeConcierge')}</h3>
             <p className="text-gray-400 mb-8 leading-relaxed">
-              Cant come to us? We will come to you with our exclusive home service tailored to your busy schedule.
+              {t('homeConciergeDesc')}
             </p>
             <ul className="space-y-4 mb-8">
               <li className="flex items-center gap-4 text-gray-300">
@@ -183,9 +190,9 @@ const Home = () => {
             </ul>
             <Link
               to="/book-home-visit"
-              className="inline-block px-6 py-3 border border-tailor-gold text-tailor-gold font-semibold rounded-md hover:bg-tailor-gold/10 transition-all duration-300"
+              className="inline-block px-6 py-3 bg-tailor-gold text-tailor-black font-semibold rounded-md hover:bg-tailor-gold-light transition-all duration-300 shadow-lg hover:shadow-tailor-gold/50"
             >
-              Book Home Visit
+              {t('bookHomeVisit')}
             </Link>
           </div>
         </div>
@@ -196,10 +203,10 @@ const Home = () => {
       <section className="container mx-auto px-6 py-20">
         <div className="bg-tailor-darker border border-tailor-gold/30 rounded-lg p-12 text-center" data-aos="fade-up">
           <h2 className="text-4xl font-serif text-white mb-6">
-            Ready to Get Started?
+            {t('readyToGetStarted')}
           </h2>
           <p className="text-xl text-gray-400 mb-8">
-            Join us today and experience the difference of custom tailoring.
+            {t('joinUsToday')}
           </p>
           <Link
             to="/register"

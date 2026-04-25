@@ -4,30 +4,37 @@ const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
 
-    const [auth, setAuth] = useState({
-        user:null,
-        token:""
+    const [auth, setAuth] = useState(() => {
+        const data = localStorage.getItem("auth");
+        if (data) {
+            const parsedData = JSON.parse(data);
+            return {
+                user: parsedData.user,
+                token: parsedData.token
+            };
+        }
+        return {
+            user: null,
+            token: ""
+        };
     });
 
-    // default axios
-    axios.defaults.headers.common['Authorization'] = auth?.token;
-
     useEffect(() => {
-     const data = localStorage.getItem("auth");
-     if (data) {
-        const parsedData = JSON.parse(data);
-    
-        setAuth( (prevState) => ( {...prevState, user:parsedData.user,token:parsedData.token}));
-     }
-    },[]);
+        // Update axios header
+        axios.defaults.headers.common['Authorization'] = auth?.token;
+        
+        // Update localStorage whenever auth changes and has a token
+        if (auth?.token) {
+            localStorage.setItem("auth", JSON.stringify(auth));
+        }
+    }, [auth]);
 
-return (
-    <AuthContext.Provider value={{auth, setAuth}}>
-        {children}
-    </AuthContext.Provider>
-)
-
-}
+    return (
+        <AuthContext.Provider value={{auth, setAuth}}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
 
 // custom hooks
 

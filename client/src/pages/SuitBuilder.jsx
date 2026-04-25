@@ -174,8 +174,8 @@ const SuitBuilder = () => {
 
             <div className="container mx-auto px-6 mt-12">
                 {/* Visual Progress Stepper */}
-                <div className="max-w-4xl mx-auto mb-16 relative">
-                    <div className="flex justify-between items-center relative z-10">
+                <div className="max-w-4xl mx-auto mb-16 relative overflow-x-auto pb-4 scrollbar-hide">
+                    <div className="flex justify-between items-center relative z-10 min-w-[600px] md:min-w-0 px-4">
                         {steps.map((step, i) => {
                             const isSkipped = orderType === 'Pants Only' && (i === 1 || i === 2);
                             if (isSkipped) return null;

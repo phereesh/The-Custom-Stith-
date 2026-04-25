@@ -226,9 +226,29 @@ const AdminDashboard = () => {
         <div className="bg-tailor-black min-h-screen">
             <Header />
             <div className="container mx-auto px-6 py-12">
-                <div className="mb-8">
-                    <h1 className="text-4xl font-serif text-white mb-2">Admin Dashboard</h1>
-                    <p className="text-gray-400">Manage home visit requests and suit orders.</p>
+                <div className="mb-12 relative overflow-hidden bg-gradient-to-r from-tailor-darker to-[#1a1a1a] p-8 rounded-3xl border border-tailor-gold/20 shadow-2xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-tailor-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <h1 className="text-4xl md:text-5xl font-serif text-white mb-2">Command <span className="text-tailor-gold">Center</span></h1>
+                    <p className="text-gray-400">Executive overview of appointments and bespoke orders.</p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
+                        <div className="bg-tailor-black/40 backdrop-blur-md rounded-2xl p-6 border border-white/5">
+                            <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Total Revenue</p>
+                            <p className="text-3xl font-serif text-white">Rs. {exclusiveRevenue.toLocaleString('en-IN')}</p>
+                        </div>
+                        <div className="bg-tailor-black/40 backdrop-blur-md rounded-2xl p-6 border border-white/5">
+                            <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Pending Visits</p>
+                            <p className="text-3xl font-serif text-tailor-gold">{visits.filter(v => v.status === 'Pending').length}</p>
+                        </div>
+                        <div className="bg-tailor-black/40 backdrop-blur-md rounded-2xl p-6 border border-white/5">
+                            <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Active Orders</p>
+                            <p className="text-3xl font-serif text-white">{orders.filter(o => o.status === 'In Progress' || o.status === 'Fitting').length}</p>
+                        </div>
+                        <div className="bg-tailor-black/40 backdrop-blur-md rounded-2xl p-6 border border-white/5">
+                            <p className="text-gray-500 text-xs uppercase tracking-widest mb-1">Efficiency</p>
+                            <p className="text-3xl font-serif text-green-400">94%</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex gap-2 mb-8 border-b border-tailor-gold/20">
@@ -272,20 +292,26 @@ const AdminDashboard = () => {
 
                 {tab === 'visits' && (
                     <div>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                            {['All', ...VISIT_STATUSES].map((s) => (
-                                <button
-                                    key={s}
-                                    onClick={() => setVisitFilter(s)}
-                                    className={`px-4 py-2 rounded-md border text-sm font-medium transition-all duration-300 ${
-                                        visitFilter === s
-                                            ? 'bg-tailor-gold text-tailor-black border-tailor-gold'
-                                            : 'border-tailor-gold/30 text-gray-300 hover:border-tailor-gold'
-                                    }`}
-                                >
-                                    {s}
-                                </button>
-                            ))}
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                            <div className="flex flex-wrap gap-2">
+                                {['All', ...VISIT_STATUSES].map((s) => (
+                                    <button
+                                        key={s}
+                                        onClick={() => setVisitFilter(s)}
+                                        className={`px-4 py-2 rounded-full border text-xs font-medium transition-all duration-300 ${
+                                            visitFilter === s
+                                                ? 'bg-tailor-gold text-tailor-black border-tailor-gold'
+                                                : 'border-white/10 text-gray-400 hover:border-tailor-gold hover:text-white'
+                                        }`}
+                                    >
+                                        {s}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="text-gray-500 text-xs flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-tailor-gold animate-pulse"></span>
+                                Live Appointment Feed
+                            </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -312,11 +338,12 @@ const AdminDashboard = () => {
                                         <thead className="bg-tailor-black/60 text-tailor-gold text-sm uppercase tracking-wider">
                                             <tr>
                                                 <th className="px-6 py-4">Customer</th>
+                                                <th className="px-6 py-4">Type</th>
                                                 <th className="px-6 py-4">Contact</th>
-                                                <th className="px-6 py-4">Address</th>
+                                                <th className="px-6 py-4">Location</th>
                                                 <th className="px-6 py-4">Scheduled</th>
                                                 <th className="px-6 py-4">Status</th>
-                                                <th className="px-6 py-4">Actions</th>
+                                                <th className="px-6 py-4">Update</th>
                                                 <th className="px-6 py-4">View</th>
                                             </tr>
                                         </thead>
@@ -327,17 +354,22 @@ const AdminDashboard = () => {
                                                         <p className="font-semibold text-white">{v.name}</p>
                                                         <p className="text-gray-400 text-xs">{v.email}</p>
                                                     </td>
-                                                    <td className="px-6 py-4">{v.contact}</td>
+                                                    <td className="px-6 py-4">
+                                                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${v.serviceType === 'Shop Visit' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'}`}>
+                                                            {v.serviceType || 'Home'}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4 font-mono">{v.contact}</td>
                                                     <td className="px-6 py-4 max-w-xs">
-                                                        <p>{v.address}</p>
-                                                        <p className="text-gray-400 text-xs">{v.city}</p>
+                                                        <p className="truncate">{v.address || 'Showroom'}</p>
+                                                        <p className="text-gray-500 text-[10px] uppercase tracking-tight">{v.city}</p>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <p>{v.preferredDate}</p>
-                                                        <p className="text-gray-400 text-xs">{v.preferredTime}</p>
+                                                        <p className="font-semibold text-gray-300">{v.preferredDate}</p>
+                                                        <p className="text-gray-500 text-xs">{v.preferredTime}</p>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <span className={`px-3 py-1 rounded-full border text-xs font-semibold ${visitStatusColor(v.status)}`}>
+                                                        <span className={`px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest ${visitStatusColor(v.status)}`}>
                                                             {v.status}
                                                         </span>
                                                     </td>
@@ -345,7 +377,7 @@ const AdminDashboard = () => {
                                                         <select
                                                             value={v.status}
                                                             onChange={(e) => handleVisitStatusChange(v._id, e.target.value)}
-                                                            className="bg-tailor-black border border-tailor-gold/30 text-white rounded-md px-3 py-2 text-sm focus:border-tailor-gold outline-none"
+                                                            className="bg-[#1a1a1a] border border-white/5 text-gray-300 rounded-lg px-2 py-1.5 text-xs focus:border-tailor-gold outline-none cursor-pointer hover:bg-[#222] transition-colors"
                                                         >
                                                             {VISIT_STATUSES.map((s) => (<option key={s} value={s}>{s}</option>))}
                                                         </select>
@@ -365,39 +397,41 @@ const AdminDashboard = () => {
 
                 {tab === 'orders' && (
                     <div>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                            {['All', ...ORDER_STATUSES].map((s) => (
-                                <button
-                                    key={s}
-                                    onClick={() => setOrderFilter(s)}
-                                    className={`px-4 py-2 rounded-md border text-sm font-medium transition-all duration-300 ${
-                                        orderFilter === s
-                                            ? 'bg-tailor-gold text-tailor-black border-tailor-gold'
-                                            : 'border-tailor-gold/30 text-gray-300 hover:border-tailor-gold'
-                                    }`}
-                                >
-                                    {s}
-                                </button>
-                            ))}
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                            <div className="flex flex-wrap gap-2">
+                                {['All', ...ORDER_STATUSES].map((s) => (
+                                    <button
+                                        key={s}
+                                        onClick={() => setOrderFilter(s)}
+                                        className={`px-4 py-2 rounded-full border text-xs font-medium transition-all duration-300 ${
+                                            orderFilter === s
+                                                ? 'bg-tailor-gold text-tailor-black border-tailor-gold'
+                                                : 'border-white/10 text-gray-400 hover:border-tailor-gold hover:text-white'
+                                        }`}
+                                    >
+                                        {s}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                             {ORDER_STATUSES.map((s) => (
-                                <div key={s} className="bg-tailor-darker border border-tailor-gold/20 rounded-lg p-5">
-                                    <p className="text-gray-400 text-sm mb-1">{s}</p>
-                                    <p className="text-3xl font-serif text-tailor-gold">
-                                        {orders.filter((o) => o.status === s).length}
+                                <div key={s} className="bg-[#111] border border-white/5 rounded-2xl p-6 hover:border-tailor-gold/20 transition-all duration-300 group">
+                                    <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-2 group-hover:text-tailor-gold transition-colors">{s}</p>
+                                    <p className="text-3xl font-serif text-white">
+                                        {orders.filter((o) => o.status === s && !o.isExclusive).length}
                                     </p>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="bg-tailor-darker border border-tailor-gold/20 rounded-2xl overflow-hidden">
+                        <div className="bg-tailor-darker border border-tailor-gold/20 rounded-2xl overflow-hidden shadow-2xl">
                             {loadingOrders ? (
-                                <div className="p-10 text-center text-gray-400">Loading suit orders…</div>
+                                <div className="p-20 text-center text-gray-500 animate-pulse">Synchronizing order database…</div>
                             ) : filteredOrders.length === 0 ? (
-                                <div className="p-10 text-center text-gray-400">
-                                    No suit orders {orderFilter !== 'All' ? `with status "${orderFilter}"` : 'yet'}.
+                                <div className="p-20 text-center text-gray-500">
+                                    No suit orders {orderFilter !== 'All' ? `marked as "${orderFilter}"` : 'found'}.
                                 </div>
                             ) : (
                                 <div className="overflow-x-auto">
@@ -472,22 +506,24 @@ const AdminDashboard = () => {
 
                 {tab === 'exclusive' && (
                     <div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                            <div className="bg-tailor-darker border border-tailor-gold/20 rounded-lg p-5">
-                                <p className="text-gray-400 text-sm mb-1">Total Orders</p>
-                                <p className="text-3xl font-serif text-tailor-gold">{exclusiveOrders.length}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                            <div className="bg-[#111] border border-white/5 rounded-2xl p-6 group hover:border-tailor-gold/20 transition-all">
+                                <span className="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-tailor-gold transition-colors">Digital Revenue</span>
+                                <p className="text-3xl font-serif text-white mt-1">Rs. {exclusiveRevenue.toLocaleString('en-IN')}</p>
                             </div>
-                            <div className="bg-tailor-darker border border-green-500/20 rounded-lg p-5">
-                                <p className="text-gray-400 text-sm mb-1">Paid</p>
-                                <p className="text-3xl font-serif text-green-400">{exclusiveOrders.filter((o) => o.paymentStatus === 'Completed').length}</p>
+                            <div className="bg-[#111] border border-white/5 rounded-2xl p-6 group hover:border-green-500/20 transition-all">
+                                <span className="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-green-400 transition-colors">Success Rate</span>
+                                <p className="text-3xl font-serif text-green-400 mt-1">
+                                    {exclusiveOrders.length > 0 ? ((exclusiveOrders.filter(o => o.paymentStatus === 'Completed').length / exclusiveOrders.length) * 100).toFixed(0) : 0}%
+                                </p>
                             </div>
-                            <div className="bg-tailor-darker border border-yellow-500/20 rounded-lg p-5">
-                                <p className="text-gray-400 text-sm mb-1">Pending Payment</p>
-                                <p className="text-3xl font-serif text-yellow-400">{exclusiveOrders.filter((o) => o.paymentStatus === 'Pending').length}</p>
+                            <div className="bg-[#111] border border-white/5 rounded-2xl p-6 group hover:border-yellow-500/20 transition-all">
+                                <span className="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-yellow-400 transition-colors">Awaiting Funds</span>
+                                <p className="text-3xl font-serif text-yellow-400 mt-1">{exclusiveOrders.filter((o) => o.paymentStatus === 'Pending').length}</p>
                             </div>
-                            <div className="bg-tailor-darker border border-tailor-gold/20 rounded-lg p-5">
-                                <p className="text-gray-400 text-sm mb-1">Revenue</p>
-                                <p className="text-3xl font-serif text-tailor-gold">Rs. {exclusiveRevenue.toLocaleString('en-IN')}</p>
+                            <div className="bg-[#111] border border-white/5 rounded-2xl p-6 group hover:border-red-500/20 transition-all">
+                                <span className="text-[10px] uppercase tracking-widest text-gray-500 group-hover:text-red-400 transition-colors">Failed Trans.</span>
+                                <p className="text-3xl font-serif text-red-400 mt-1">{exclusiveOrders.filter((o) => o.paymentStatus === 'Failed').length}</p>
                             </div>
                         </div>
 
@@ -503,7 +539,7 @@ const AdminDashboard = () => {
                                             <tr>
                                                 <th className="px-6 py-4">Customer</th>
                                                 <th className="px-6 py-4">Item</th>
-                                                <th className="px-6 py-4">Category</th>
+                                                <th className="px-6 py-4">Size</th>
                                                 <th className="px-6 py-4">Amount</th>
                                                 <th className="px-6 py-4">Method</th>
                                                 <th className="px-6 py-4">Payment</th>
@@ -526,7 +562,11 @@ const AdminDashboard = () => {
                                                             <p className="font-medium text-white">{o.productTitle}</p>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4">{o.productCategory || '—'}</td>
+                                                    <td className="px-6 py-4">
+                                                        <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-gray-300">
+                                                            {o.size || 'N/A'}
+                                                        </span>
+                                                    </td>
                                                     <td className="px-6 py-4 text-tailor-gold font-bold">Rs. {Number(o.amount).toLocaleString('en-IN')}</td>
                                                     <td className="px-6 py-4 capitalize">{o.paymentMethod}</td>
                                                     <td className="px-6 py-4">
@@ -703,6 +743,7 @@ const AdminDashboard = () => {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                             <div><p className="text-gray-400">Item</p><p className="text-white font-medium">{selectedOrder.productTitle}</p></div>
                                             <div><p className="text-gray-400">Category</p><p className="text-white font-medium">{selectedOrder.productCategory || '—'}</p></div>
+                                            <div><p className="text-gray-400">Size</p><p className="text-white font-medium">{selectedOrder.size || 'N/A'}</p></div>
                                             <div><p className="text-gray-400">Amount</p><p className="text-tailor-gold font-bold">Rs. {Number(selectedOrder.amount).toLocaleString('en-IN')}</p></div>
                                             <div><p className="text-gray-400">Method</p><p className="text-white font-medium capitalize">{selectedOrder.paymentMethod}</p></div>
                                             {selectedOrder.transactionId && (

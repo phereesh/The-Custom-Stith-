@@ -11,13 +11,28 @@ const ProductCard = ({ product }) => {
     const { auth } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [selectedSize, setSelectedSize] = useState('');
 
     const priceNpr = Math.round(product.price * USD_TO_NPR);
+
+    const getAvailableSizes = () => {
+        if (product.category === 'Suits') return ['36', '38', '40', '42', '44', '46'];
+        if (product.category === 'Shirts') return ['M', 'L', 'XL', 'XXL'];
+        if (product.category === 'Pants') return ['30', '32', '34', '36', '38', '40'];
+        return [];
+    };
+
+    const sizes = getAvailableSizes();
 
     const handleBuy = async () => {
         if (!auth?.token) {
             toast.error('Please login to make a purchase');
             navigate('/login');
+            return;
+        }
+
+        if (sizes.length > 0 && !selectedSize) {
+            toast.error('Please select a size first');
             return;
         }
 
@@ -31,6 +46,7 @@ const ProductCard = ({ product }) => {
                     productImage: product.image,
                     productCategory: product.category,
                     amount: priceNpr,
+                    size: selectedSize || 'One Size'
                 },
                 { headers: { Authorization: auth.token } }
             );
@@ -66,9 +82,26 @@ const ProductCard = ({ product }) => {
                     <span className="text-xl font-bold text-tailor-gold">Rs. {priceNpr.toLocaleString('en-IN')}</span>
                 </div>
                 <h3 className="text-xl font-serif text-white mb-3 group-hover:text-tailor-gold transition-colors duration-300">{product.title}</h3>
-                <p className="text-gray-400 text-sm mb-6 flex-grow line-clamp-3 italic">
+                <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-3 italic">
                     {product.description}
                 </p>
+
+                {sizes.length > 0 && (
+                    <div className="mb-6">
+                        <label className="block text-gray-400 text-[10px] uppercase tracking-widest mb-3">Select Size</label>
+                        <div className="flex flex-wrap gap-2">
+                            {sizes.map((s) => (
+                                <button
+                                    key={s}
+                                    onClick={() => setSelectedSize(s)}
+                                    className={`w-10 h-10 rounded-md border text-sm font-bold transition-all duration-300 ${selectedSize === s ? 'bg-tailor-gold text-tailor-black border-tailor-gold' : 'border-white/10 text-gray-400 hover:border-tailor-gold/50'}`}
+                                >
+                                    {s}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <button
                     onClick={handleBuy}
