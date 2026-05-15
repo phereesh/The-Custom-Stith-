@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../components';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -173,6 +174,8 @@ const FabricChoice = () => {
         AOS.init();
     }, []);
 
+    const navigate = useNavigate();
+
     // State for the interactive 3D suit preview
     const [selectedFabricId, setSelectedFabricId] = useState(FABRIC_DATA[0].id);
     const [suitColor, setSuitColor] = useState(FABRIC_DATA[0].color);
@@ -273,6 +276,19 @@ const FabricChoice = () => {
                                         title={color.name}
                                     />
                                 ))}
+                            </div>
+                            
+                            {/* Feel Fabric Button */}
+                            <div className="mt-8 flex justify-center">
+                                <button
+                                    onClick={() => navigate('/book-boutique-visit')}
+                                    className="px-6 py-3 rounded-full font-bold shadow-lg transition-all duration-300 bg-tailor-gold text-tailor-black hover:bg-yellow-500 flex items-center gap-2 transform hover:scale-105"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                    Feel Fabric in Boutique
+                                </button>
                             </div>
                         </div>
 
